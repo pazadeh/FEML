@@ -10,7 +10,6 @@ import pickle
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 
-os.chdir("./Excel_data")
 
 rs_list = []
 Mechanical_param = 'Mean_stress_3'
@@ -36,26 +35,15 @@ def algorithm_pipeline(X_train_data, X_test_data, y_train_data, y_test_data,
     return fitted_model, pred
 
 
-df=pd.read_excel("Sim_ML_results_20200120.xlsx",sheet_name='For_ML_22020')       			
+df=pd.read_excel("input.xlsx",sheet_name='For_ML_22020')       			
 features = df.columns[1:28]
 
 for i in range(0,300):
     print(i)
     first_time = True
-       		
-       		# Create a dataframe with the four feature variables
-       	# Create two new dataframes, one with the training rows, one with the test rows
-       	#if len(test)>12:
-       	# Show the number of observations for the test and training dataframes
-       	 
-       	# Create a list of the feature column's names2
     X_train, X_test, y_train, y_test = train_test_split(df[features], df[Mechanical_param],
                                                         test_size=0.10, random_state=i, 
-                                                        stratify=df['Class'])       	# train['species'] contains the actual species names. Before we can use it,
-       	# we need to convert each species name into a digit. So, in this case there
-       	# are three species, which have been coded as 0, 1, or 2.
-    
-
+                                                        stratify=df['Class'])       	
     model = GradientBoostingRegressor()
     param_grid = {
         'alpha':[0.8,0.9],
@@ -108,7 +96,6 @@ def save_obj(obj, name ):
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
         
 save_obj(df_models,'GBR_models_90p_d2_MeanS')
-# Root Mean Squared Error
 
 
 
