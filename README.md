@@ -16,3 +16,7 @@ The ML models are used for an automatic classification and regression.
 # Training the ML models
 To train the ML models we used a 5-fold cross validation scheme. The input can be found in "input.xlsx". The models are trained using a grid search method and aiming for specific accuracy in both classification and regression task.
 
+The training could be computationally costly. Therefore, running the trianing on a machine with multiple cores (here: 16) is suggested.
+To train the classification model use the "Classification-tarin.py" code and to train the regression model use the "Regression-train.py"
+
+The paper is at the moment under revision and this repo will be completed after publishing the paper.
