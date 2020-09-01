@@ -17,6 +17,18 @@ The ML models are used for an automatic classification and regression.
 To train the ML models we used a 5-fold cross validation scheme. The input can be found in "input.xlsx". The models are trained using a grid search method and aiming for specific accuracy in both classification and regression task.
 
 The training could be computationally costly. Therefore, running the trianing on a machine with multiple cores (here: 16) is suggested.
-To train the classification model use the "Classification-tarin.py" code and to train the regression model use the "Regression-train.py"
+To train the classification model use the "Classification-tarin.py" code.
+To train the regression model for predicting the mechanical behaviour use the "Regression-train_#.py" for following cases
+  
+  Large deformations: Mean Stress: Regression_train_LargeS.py
+                      Mean_Strain: Regression_train_LargeE.py
+                      Rapture Failure: Regression_train_LargeFR.py
+                      Buckling Failure: Regression_train_LargeFB.py
+                      
+  small deformations: Mean Stress: Regression_train_smallS.py
+                      Mean_Strain: Regression_train_smallE.py
+                      Rapture Failure: Regression_train_smallFR.py
+                      Buckling Failure: Regression_train_smallFB.py
+
 
 The paper is at the moment under revision and this repo will be completed after publishing the paper.
