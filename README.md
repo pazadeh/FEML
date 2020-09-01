@@ -25,7 +25,7 @@ To train the regression model for predicting the mechanical behaviour use the "R
                       3. Rapture Failure: Regression_train_LargeFR.py
                       4. Buckling Failure: Regression_train_LargeFB.py
                       
-  small deformations: 1. Mean Stress: Regression_train_smallS.py
+  Small deformations: 1. Mean Stress: Regression_train_smallS.py
                       2. Mean_Strain: Regression_train_smallE.py
                       3. Rapture Failure: Regression_train_smallFR.py
                       4. Buckling Failure: Regression_train_smallFB.py
