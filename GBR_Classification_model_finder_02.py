@@ -10,11 +10,10 @@ import pickle
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import train_test_split
 
-os.chdir("./Excel_data")
 
 rs_list = []
 
-
+# creating a pipline for grid search
 def algorithm_pipeline(X_train_data, X_test_data, y_train_data, y_test_data, 
                        model, param_grid, cv=5,
                        do_probabilities = False):
@@ -36,27 +35,20 @@ def algorithm_pipeline(X_train_data, X_test_data, y_train_data, y_test_data,
     return fitted_model, pred
 
 
-df=pd.read_excel("Sim_ML_results_20200515.xlsx",sheet_name='For_Classification')       			
+df=pd.read_excel("input.xlsx",sheet_name='For_Classification')       			
 features = df.columns[1:27]
 df['Class'][:]=pd.factorize(df['Class'])[0]
 for i in range(0,200):
-    print(i)
     first_time = True
        		
-       		# Create a dataframe with the four feature variables
-       	# Create two new dataframes, one with the training rows, one with the test rows
-       	#if len(test)>12:
-       	# Show the number of observations for the test and training dataframes
-       	 
-       	# Create a list of the feature column's names2
+
     X_train, X_test, y_train, y_test = train_test_split(df[features], df['Class'],
                                                         test_size=0.20, random_state=i, 
-                                                        stratify=df['Class'])       	# train['species'] contains the actual species names. Before we can use it,
-       	# we need to convert each species name into a digit. So, in this case there
-       	# are three species, which have been coded as 0, 1, or 2.
+                                                        stratify=df['Class'])       	
     
 
     model = GradientBoostingClassifier()
+    #feeding grid search parameters
     param_grid = {
         'min_samples_leaf':[1,2,3],
         'min_samples_split':[2,3],
@@ -69,10 +61,10 @@ for i in range(0,200):
     }
         
         
-    
+    # Trainin the models using 5-folc CV
     model_trained, pred = algorithm_pipeline(X_train, X_test, y_train, y_test, model, 
                                      param_grid, cv=5)
-
+    # Extracting the best mode in grid 
     best_params = model_trained.best_params_
     df_model = pd.DataFrame.from_dict(best_params, orient='index') 
 
@@ -81,7 +73,7 @@ for i in range(0,200):
     F1_score    = mt.f1_score(y_test, y_pred)
     recal_score = mt.recall_score(y_test, y_pred)
     accuracy    = mt.accuracy_score(y_test, y_pred) 
-
+    # Checking for the accuracy and F1_score
     if accuracy > 0.85 and F1_score > 0.85:
         rs_list.append([accuracy,F1_score,recal_score])
         model_metrics = {"Accuracy":accuracy , "F1_score":F1_score  ,"recal_score":recal_score, "i": i}
@@ -91,7 +83,6 @@ for i in range(0,200):
             df_models = df_model_metrics
             first_time = False
         df_models = pd.concat([df_models,df_model_metrics],axis = 1)
-        print('SEED:', i)
         print('Accuracy:', accuracy)
         print('F1_score',F1_score)      
         print('Model:', df_model)
@@ -103,8 +94,7 @@ def save_obj(obj, name ):
     with open(name + '.pkl', 'wb') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
         
-save_obj(df_models,'GBR_models_90p_d2_FR')
-# Root Mean Squared Error
+save_obj(df_models,'GBR_models_classification')
 
 
 
